@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compute Your Weiner Score</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    height:100%;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:
+        radial-gradient(circle at top,#445a78 0%,#27374c 40%,#131d29 100%);
+    color:white;
+}
+
+body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+}
+
+.card{
+    width:100%;
+    max-width:620px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:24px;
+    padding:42px;
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.35);
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 14px;
+    border-radius:999px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.08);
+    font-size:.78rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:#d6e6ff;
+    margin-bottom:24px;
+}
+
+h1{
+    font-size:clamp(2rem,5vw,3.5rem);
+    line-height:1.05;
+    margin-bottom:16px;
+    font-weight:800;
+}
+
+.subtitle{
+    color:#c7d4e6;
+    line-height:1.7;
+    margin-bottom:38px;
+    font-size:1.02rem;
+}
+
+label{
+    display:block;
+    margin-bottom:12px;
+    font-weight:600;
+    font-size:1.05rem;
+}
+
+.inputRow{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+input[type=number]{
+    flex:1;
+    min-width:180px;
+    padding:18px;
+    border:none;
+    border-radius:14px;
+    font-size:1.2rem;
+    background:white;
+    color:#111;
+    outline:none;
+    transition:.2s;
+}
+
+input[type=number]:focus{
+    transform:translateY(-1px);
+    box-shadow:0 0 0 4px rgba(111,184,255,.35);
+}
+
+button{
+    padding:18px 28px;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    background:linear-gradient(135deg,#63b3ff,#3d8cff);
+    color:white;
+    font-size:1rem;
+    font-weight:700;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(70,145,255,.35);
+}
+
+button:active{
+    transform:translateY(0);
+}
+
+.result{
+    margin-top:38px;
+    min-height:80px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-size:1.4rem;
+    font-weight:700;
+    color:white;
+}
+
+.spinner{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    border:4px solid rgba(255,255,255,.2);
+    border-top-color:white;
+    animation:spin .9s linear infinite;
+    margin:0 auto 16px;
+}
+
+.hidden{
+    display:none;
+}
+
+footer{
+    margin-top:36px;
+    text-align:center;
+    color:#adc1d8;
+    font-size:.85rem;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@media (max-width:600px){
+
+.card{
+    padding:28px;
+}
+
+.inputRow{
+    flex-direction:column;
+}
+
+button{
+    width:100%;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<div class="card">
+
+<div class="badge">Official Calculator</div>
+
+<h1>Compute Your Weiner Score</h1>
+
+<p class="subtitle">
+The Weiner Score is calculated using your annual hot dog consumption.
+Enter your total below to compute your current score.
+</p>
+
+<form id="scoreForm">
+
+<label for="dogs">
+How many hot dogs have you eaten this year?
+</label>
+
+<div class="inputRow">
+<input
+id="dogs"
+type="number"
+min="0"
+step="1"
+placeholder="0"
+required>
+
+<button type="submit">
+Compute Score
+</button>
+</div>
+
+</form>
+
+<div class="result" id="result"></div>
+
+<footer>
+Weiner Score™ Computational Engine v1.0
+</footer>
+
+</div>
+
+<script>
+
+const form = document.getElementById("scoreForm");
+const result = document.getElementById("result");
+
+form.addEventListener("submit", function(e){
+
+    e.preventDefault();
+
+    const value = document.getElementById("dogs").value.trim();
+
+    if(value === ""){
+        return;
+    }
+
+    result.innerHTML = `
+        <div>
+            <div class="spinner"></div>
+            <div>Calculating...</div>
+        </div>
+    `;
+
+    setTimeout(function(){
+
+        result.innerHTML = `
+            <div>
+                <div style="font-size:1rem;color:#c8d9ef;margin-bottom:10px;">
+                    Computation Complete
+                </div>
+                <div style="font-size:2rem;font-weight:800;">
+                    Your Weiner Score is ${Number(value)}
+                </div>
+            </div>
+        `;
+
+    },1500);
+
+});
+
+</script>
+
+</body>
+</html>
